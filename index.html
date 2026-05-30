@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>버스 시간표</title>
+  <title>운행 시간표</title>
   <link rel="stylesheet" href="style.css">
   <style>
     /* 로그인 화면 정중앙 배치 스타일 */
@@ -78,12 +78,12 @@
       
       <div class="input-group">
           <label for="username">ID</label>
-          <input type="text" id="username" placeholder="아이디를 입력하세요">
+          <input type="text" id="username" placeholder="아이디를 입력하세요" onkeydown="checkEnter(event)">
       </div>
       
       <div class="input-group">
           <label for="password">PW</label>
-          <input type="password" id="password" placeholder="비밀번호를 입력하세요">
+          <input type="password" id="password" placeholder="비밀번호를 입력하세요" onkeydown="checkEnter(event)">
       </div>
       
       <button onclick="handleLogin()" id="submit-btn" class="login-btn">로그인</button>
@@ -91,6 +91,7 @@
       <div class="links">
           <span class="divider">|</span>
           <a onclick="toggleMode()" id="toggle-link">관리자 로그인</a>
+          <span class="divider">|</span>
       </div>
   </div>
 
@@ -294,6 +295,13 @@
   <script>
     let isAdminMode = false;
 
+    // 엔터키 감지 함수 (추가됨!)
+    function checkEnter(event) {
+        if (event.key === "Enter") {
+            handleLogin();
+        }
+    }
+
     function handleRegister() {
         alert("GitHub Pages는 데이터베이스 서버가 없어 신규 가입 정보를 저장할 수 없습니다.\n지정된 테스트용 아이디와 비밀번호를 사용해주세요!");
     }
@@ -322,7 +330,7 @@
         const idInput = document.getElementById('username').value;
         const pwInput = document.getElementById('password').value;
 
-        // 1. 관리자 로그인 처리 (요청하신 정보)
+        // 1. 관리자 로그인 처리
         if (isAdminMode) {
             if (idInput === '1001' && pwInput === '1001') {
                 alert('관리자 로그인 성공!');
@@ -333,7 +341,7 @@
                 alert('관리자 ID 또는 PW가 일치하지 않습니다.');
             }
         } 
-        // 2. 일반 로그인 처리 (요청하신 정보)
+        // 2. 일반 로그인 처리
         else {
             if (idInput === '123456' && pwInput === '123456') {
                 alert('로그인 성공! 버스 시간표를 조회합니다.');
