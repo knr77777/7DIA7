@@ -566,3 +566,59 @@
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>버스 시간표</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="login-section" style="text-align: center; margin-top: 100px;">
+        <h2>버스 시간표 로그인</h2>
+        <input type="password" id="password-input" placeholder="비밀번호를 입력하세요" style="padding: 10px; width: 200px;">
+        <br><br>
+        <button onclick="checkLogin('user')" style="padding: 10px 20px; background-color: blue; color: white; border: none; cursor: pointer;">일반 로그인</button>
+        <button onclick="checkLogin('admin')" style="padding: 10px 20px; background-color: red; color: white; border: none; cursor: pointer; margin-left: 10px;">관리자 로그인</button>
+    </div>
+
+    <div id="main-content" style="display: none;">
+        <h1>버스 시간표 (접속 완료)</h1>
+        
+        <div id="admin-banner" style="display: none; background-color: #ffcccc; padding: 10px; margin-bottom: 20px;">
+            <strong>⚠️ 관리자 모드로 접속 중입니다. (시간표 수정 권한)</strong>
+        </div>
+        
+        <div class="tabs">
+            </div>
+    </div>
+
+    <script>
+        function checkLogin(role) {
+            const password = document.getElementById('password-input').value;
+
+            if (role === 'user') {
+                // 일반 로그인 비밀번호를 '1234'로 지정할 때
+                if (password === '1234') {
+                    document.getElementById('login-section').style.display = 'none'; // 로그인창 숨기기
+                    document.getElementById('main-content').style.display = 'block'; // 본문 띄우기
+                } else {
+                    alert('일반 비밀번호가 틀렸습니다!');
+                }
+            } 
+            
+            else if (role === 'admin') {
+                // 관리자 로그인 비밀번호를 'admin77'로 지정할 때
+                if (password === 'admin77') {
+                    document.getElementById('login-section').style.display = 'none';
+                    document.getElementById('main-content').style.display = 'block';
+                    document.getElementById('admin-banner').style.display = 'block'; // 관리자 전용 배너 띄우기
+                } else {
+                    alert('관리자 비밀번호가 틀렸습니다!');
+                }
+            }
+        }
+    </script>
+</body>
+</html>
