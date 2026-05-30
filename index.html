@@ -89,7 +89,6 @@
       <button onclick="handleLogin()" id="submit-btn" class="login-btn">로그인</button>
       
       <div class="links">
-          <a onclick="handleRegister()">회원가입</a>
           <span class="divider">|</span>
           <a onclick="toggleMode()" id="toggle-link">관리자 로그인</a>
       </div>
@@ -325,7 +324,7 @@
 
         // 1. 관리자 로그인 처리 (요청하신 정보)
         if (isAdminMode) {
-            if (idInput === 'xv1mzn' && pwInput === '1234567') {
+            if (idInput === '1001' && pwInput === '1001') {
                 alert('관리자 로그인 성공!');
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
@@ -336,7 +335,7 @@
         } 
         // 2. 일반 로그인 처리 (요청하신 정보)
         else {
-            if (idInput === '12345' && pwInput === '123456') {
+            if (idInput === '123456' && pwInput === '123456') {
                 alert('로그인 성공! 버스 시간표를 조회합니다.');
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
