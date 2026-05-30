@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>운행 시간표</title>
+  <title>시간표</title>
   <link rel="stylesheet" href="style.css">
   <style>
     /* 로그인 화면 정중앙 배치 스타일 */
@@ -102,7 +102,7 @@
         <strong>⚠️ 관리자 계정으로 접속되었습니다. (시간표 편집 권한 활성화)</strong>
     </div>
 
-    <h1>버스 시간표</h1>
+    <h1>운행 시간표</h1>
 
     <div class="tabs">
       <button style="background:red;color:white;" onclick="showTab('jikhaeng')">직행</button>
@@ -295,7 +295,7 @@
   <script>
     let isAdminMode = false;
 
-    // 엔터키 감지 함수 (추가됨!)
+    // 엔터키 감지 함수
     function checkEnter(event) {
         if (event.key === "Enter") {
             handleLogin();
@@ -327,12 +327,29 @@
     }
 
     function handleLogin() {
-        const idInput = document.getElementById('username').value;
-        const pwInput = document.getElementById('password').value;
+        // .trim()을 붙여서 아이디 비밀번호 앞뒤에 공백이 붙어 실패하는 것을 방지합니다.
+        const idInput = document.getElementById('username').value.trim();
+        const pwInput = document.getElementById('password').value.trim();
+
+        // [관리자 계정 목록 배열]
+        const adminList = [
+            { id: '1001', pw: '1001' },
+            { id: 'xv1mzn', pw: '12345' }
+        ];
+
+        // [일반 사용자 계정 목록 배열]
+        const userList = [
+            { id: '123456', pw: '123456' },
+            { id: 'KK', pw: '123456' },
+            { id: 'WW', pw: '123456' }
+        ];
 
         // 1. 관리자 로그인 처리
         if (isAdminMode) {
-            if (idInput === '1001' && pwInput === '1001') {
+            // adminList 목록 중에 입력한 id와 pw가 모두 일치하는 한 쌍이 존재하는지 체크
+            const isValidAdmin = adminList.some(admin => admin.id === idInput && admin.pw === pwInput);
+
+            if (isValidAdmin) {
                 alert('관리자 로그인 성공!');
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
@@ -343,7 +360,10 @@
         } 
         // 2. 일반 로그인 처리
         else {
-            if (idInput === '123456' && pwInput === '123456') {
+            // userList 목록 중에 입력한 id와 pw가 모두 일치하는 한 쌍이 존재하는지 체크
+            const isValidUser = userList.some(user => user.id === idInput && user.pw === pwInput);
+
+            if (isValidUser) {
                 alert('로그인 성공! 버스 시간표를 조회합니다.');
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
