@@ -4,621 +4,350 @@
 <head>
   <meta charset="UTF-8">
   <title>버스 시간표</title>
-
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* 로그인 화면 정중앙 배치 스타일 */
+    .login-container {
+        width: 300px;
+        margin: 100px auto;
+        padding: 30px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        text-align: center;
+        font-family: Arial, sans-serif;
+    }
+    .login-container h2 {
+        margin-bottom: 25px;
+        color: #333;
+    }
+    .input-group {
+        margin-bottom: 15px;
+        text-align: left;
+    }
+    .input-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 14px;
+        color: #666;
+    }
+    .input-group input {
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    .login-btn {
+        width: 100%;
+        padding: 12px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+    .login-btn:hover {
+        background-color: #0056b3;
+    }
+    .links {
+        margin-top: 20px;
+        font-size: 13px;
+    }
+    .links a {
+        color: #666;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .links a:hover {
+        text-decoration: underline;
+    }
+    .links .divider {
+        margin: 0 10px;
+        color: #ccc;
+    }
+  </style>
 </head>
 
 <body>
 
-  <h1>버스 시간표</h1>
+  <div id="login-section" class="login-container">
+      <h2 id="login-title">일반 로그인</h2>
+      
+      <div class="input-group">
+          <label for="username">ID</label>
+          <input type="text" id="username" placeholder="아이디를 입력하세요">
+      </div>
+      
+      <div class="input-group">
+          <label for="password">PW</label>
+          <input type="password" id="password" placeholder="비밀번호를 입력하세요">
+      </div>
+      
+      <button onclick="handleLogin()" id="submit-btn" class="login-btn">로그인</button>
+      
+      <div class="links">
+          <a onclick="handleRegister()">회원가입</a>
+          <span class="divider">|</span>
+          <a onclick="toggleMode()" id="toggle-link">관리자 로그인</a>
+      </div>
+  </div>
 
-  <div class="tabs">
 
-<button style="background:red;color:white;" onclick="showTab('jikhaeng')">직행</button>
+  <div id="main-content" style="display: none; padding: 20px;">
 
-<button style="background:red;color:white;" onclick="showTab('geuphaeng')">급행</button>
+    <div id="admin-banner" style="display: none; background-color: #ffebeb; border: 1px solid #ffcccc; padding: 15px; margin-bottom: 20px; border-radius: 5px; color: #d9534f; text-align: center;">
+        <strong>⚠️ 관리자 계정으로 접속되었습니다. (시간표 편집 권한 활성화)</strong>
+    </div>
 
-<button style="background:#0078f;color:white;" onclick="showTab('ganseon')">간선</button>
+    <h1>버스 시간표</h1>
 
-<button style="background:rgb(1, 177, 1);color:white;" onclick="showTab('sunhwan')">순환</button>
+    <div class="tabs">
+      <button style="background:red;color:white;" onclick="showTab('jikhaeng')">직행</button>
+      <button style="background:red;color:white;" onclick="showTab('geuphaeng')">급행</button>
+      <button style="background:#0078f;color:white;" onclick="showTab('ganseon')">간선</button>
+      <button style="background:rgb(1, 177, 1);color:white;" onclick="showTab('sunhwan')">순환</button>
+      <button style="background:orange;color:white;" onclick="showTab('jiseon')">지선</button>
+    </div>
 
-<button style="background:orange;color:white;" onclick="showTab('jiseon')">지선</button>
+    <div id="jikhaeng" class="content">
+      <h2>직행</h2>
+      <a href="pdf/jikhaeng/jikhaeng1.pdf" target="_blank">직행1번 운행시간표</a>
+      <br><br>
+      <a href="pdf/jikhaeng/jikhaeng2.pdf" target="_blank">직행2번 운행시간표</a>
+      <br><br>
+    </div>
 
-</div>
+    <div id="geuphaeng" class="content" style="display:none;">
+      <h2>급행</h2>
+      <h3>평일</h3>
+      <a href="pdf/geuphaeng/weekly/1.pdf" target="_blank">급행1번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/weekly/2.pdf" target="_blank">급행2번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/weekly/3.pdf" target="_blank">급행3번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/weekly/5.pdf" target="_blank">급행5번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/weekly/7.pdf" target="_blank">급행7번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/weekly/8.pdf" target="_blank">급행8번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/weekly/8-1.pdf" target="_blank">급행8-1번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/weekly/9.pdf" target="_blank">급행9번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/weekly/9-1.pdf" target="_blank">급행9-1번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/weekly/9-2.pdf" target="_blank">급행9-2번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/weekly/9-3.pdf" target="_blank">급행9-3번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/weekly/10.pdf" target="_blank">급행10번 운행시간표</a>
+      <hr>
+      <h3>토요일</h3>
+      <a href="pdf/geuphaeng/saturday/1.pdf" target="_blank">급행1번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/saturday/2.pdf" target="_blank">급행2번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/saturday/3.pdf" target="_blank">급행3번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/saturday/5.pdf" target="_blank">급행5번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/saturday/8.pdf" target="_blank">급행8번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/saturday/8-1.pdf" target="_blank">급행8-1번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/saturday/9.pdf" target="_blank">급행9번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/saturday/9-1.pdf" target="_blank">급행9-1번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/saturday/9-2.pdf" target="_blank">급행9-2번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/saturday/9-3.pdf" target="_blank">급행9-3번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/saturday/10.pdf" target="_blank">급행10번 운행시간표</a>
+      <hr>
+      <h3>휴일</h3>
+      <a href="pdf/geuphaeng/holiday/1.pdf" target="_blank">급행1번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/holiday/2.pdf" target="_blank">급행2번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/holiday/7.pdf" target="_blank">급행7번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/holiday/8.pdf" target="_blank">급행8번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/holiday/8-1.pdf" target="_blank">급행8-1번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/holiday/+.pdf" target="_blank">급행9번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/holiday/9-1.pdf" target="_blank">급행9-1번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/holiday/9-2.pdf" target="_blank">급행9-2번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/holiday/9-3.pdf" target="_blank">급행9-3번 운행시간표</a><br><br>
+      <a href="pdf/geuphaeng/holiday/10.pdf" target="_blank">급행10번 운행시간표</a>
+    </div>
 
-  <div id="jikhaeng" class="content">
-    <h2>직행</h2>
+    <div id="ganseon" class="content" style="display:none;">
+      <h2>간선</h2>
+      <h3>평일</h3>
+      <a href="pdf/ganseon/weekly/156.pdf" target="_blank">156번 운행시간표</a><br><br>
+      <a href="pdf/ganseon/weekly/232.pdf" target="_blank">232번 운행시간표</a><br><br>
+      <a href="pdf/ganseon/weekly/232-1.pdf" target="_blank">232-1번 운행시간표</a><br><br>
+      <a href="pdf/ganseon/weekly/401.pdf" target="_blank">401번 운행시간표</a><br><br>
+      <a href="pdf/ganseon/weekly/402.pdf" target="_blank">402번 운행시간표</a><br><br>
+      <a href="pdf/ganseon/weekly/413.pdf" target="_blank">413번 운행시간표</a><br><br>
+      <a href="pdf/ganseon/weekly/425.pdf" target="_blank">425번 운행시간표</a><br><br>
+      <a href="pdf/ganseon/weekly/520.pdf" target="_blank">520번 운행시간표</a><br><br>
+      <a href="pdf/ganseon/weekly/523.pdf" target="_blank">523번 운행시간표</a><br><br>
+      <a href="pdf/ganseon/weekly/708.pdf" target="_blank">708번 운행시간표</a><br><br>
+      <a href="pdf/ganseon/weekly/725.pdf" target="_blank">725번 운행시간표</a><br><br>
+      <a href="pdf/ganseon/weekly/730.pdf" target="_blank">730번 운행시간표</a><br><br>
+      <a href="pdf/ganseon/weekly/848.pdf" target="_blank">848번 운행시간표</a><br><br>
+      <a href="pdf/ganseon/weekly/7250.pdf" target="_blank">7250번 운행시간표</a><br><br>
+      <a href="pdf/ganseon/weekly/8140.pdf" target="_blank">8140번 운행시간표</a>
+      <hr>
+      <h3>토요일</h3>
+      <a href="pdf/ganseon/saturday/326.pdf" target="_blank">326번 운행시간표</a><br><br>
+      <a href="pdf/ganseon/saturday/651.pdf" target="_blank">651번 운행시간표</a><br><br>
+      <a href="pdf/ganseon/saturday/708.pdf" target="_blank">708번 운행시간표</a><br><br>
+      <a href="pdf/ganseon/saturday/730.pdf" target="_blank">730번 운행시간표</a><br><br>
+      <a href="pdf/ganseon/saturday/937.pdf" target="_blank">937번 운행시간표</a>
+      <hr>
+      <h3>휴일</h3>
+      <a href="pdf/ganseon/holiday/401.pdf" target="_blank">401번 운행시간표</a><br><br>
+      <a href="pdf/ganseon/holiday/413.pdf" target="_blank">413번 운행시간표</a><br><br>
+      <a href="pdf/ganseon/holiday/520.pdf" target="_blank">520번 운행시간표</a><br><br>
+      <a href="pdf/ganseon/holiday/523.pdf" target="_blank">523번 운행시간표</a><br><br>
+      <a href="pdf/ganseon/holiday/708.pdf" target="_blank">708번 운행시간표</a><br><br>
+      <a href="pdf/ganseon/holiday/725.pdf" target="_blank">725번 운행시간표</a><br><br>
+      <a href="pdf/ganseon/holiday/730.pdf" target="_blank">730번 운행시간표</a><br><br>
+      <a href="pdf/ganseon/holiday/836.pdf" target="_blank">836번 운행시간표</a>
+    </div>
 
-  <a href="pdf/jikhaeng/jikhaeng1.pdf" target="_blank">직행1번 운행시간표</a>
-  <br><br>
+    <div id="sunhwan" class="content" style="display:none;">
+      <h2>순환</h2>
+      <h3>평일</h3>
+      <a href="pdf/sunhwan/weekly/2.pdf" target="_blank">순환2번 운행시간표</a><br><br>
+      <a href="pdf/sunhwan/weekly/2-1.pdf" target="_blank">순환2-1번 운행시간표</a><br><br>
+      <a href="pdf/sunhwan/weekly/3.pdf" target="_blank">순환3번 운행시간표</a><br><br>
+      <hr>
+      <h3>토요일</h3>
+      <a href="pdf/sunhwan/saturday/2.pdf" target="_blank">순환2번 운행시간표</a><br><br>
+      <a href="pdf/sunhwan/saturday/2-1.pdf" target="_blank">순환2-1번 운행시간표</a><br><br>
+      <a href="pdf/sunhwan/saturday/3-1.pdf" target="_blank">순환3-1번 운행시간표</a><br><br>
+      <hr>
+    </div>
 
-    <a href="pdf/jikhaeng/jikhaeng2.pdf" target="_blank">직행2번 운행시간표</a>
-  <br><br>
-
+    <div id="jiseon" class="content" style="display:none;">
+      <h2>지선</h2>
+      <h3>평일</h3>
+      <a href="pdf/jiseon/weekly/ga2.pdf" target="_blank">가창2번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/weekly/dar1.pdf" target="_blank">달성1번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/weekly/dar2.pdf" target="_blank">달성2번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/weekly/dar3.pdf" target="_blank">달성3번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/weekly/dar5.pdf" target="_blank">달성5번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/weekly/dar6.pdf" target="_blank">달성6번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/weekly/dar7.pdf" target="_blank">달성7번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/weekly/dong5.pdf" target="_blank">동구5번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/weekly/dong6.pdf" target="_blank">동구6번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/weekly/dong7.pdf" target="_blank">동구7번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/weekly/dong8.pdf" target="_blank">동구8번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/weekly/buck1.pdf" target="_blank">북구1번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/weekly/buck2.pdf" target="_blank">북구2번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/weekly/buck6.pdf" target="_blank">북구6번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/weekly/buck8.pdf" target="_blank">북구8번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/weekly/seo2.pdf" target="_blank">서구번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/weekly/seong2.pdf" target="_blank">성서2번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/weekly/seong3.pdf" target="_blank">성서3번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/weekly/su2.pdf" target="_blank">수성2번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/weekly/7-3.pdf" target="_blank">칠곡3번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/weekly/7-5.pdf" target="_blank">칠곡5번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/weekly/8-1.pdf" target="_blank">팔공1번 운행시간표</a><br><br>
+      <hr>
+      <h3>토요일</h3>
+      <a href="pdf/jiseon/saturday/ga2.pdf" target="_blank">가창2번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/saturday/darseo3.pdf" target="_blank">달서3번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/saturday/dar1.pdf" target="_blank">달성1번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/saturday/dar2.pdf" target="_blank">달성2번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/saturday/dar3.pdf" target="_blank">달성3번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/saturday/dar5.pdf" target="_blank">달성5번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/saturday/dar6.pdf" target="_blank">달성6번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/saturday/dar7.pdf" target="_blank">달성7번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/saturday/dong4-1.pdf" target="_blank">동구4-1번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/saturday/dong5.pdf" target="_blank">동구5번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/saturday/dong6.pdf" target="_blank">동구6번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/saturday/dong7.pdf" target="_blank">동구7번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/saturday/dong8.pdf" target="_blank">동구8번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/saturday/dong10.pdf" target="_blank">동구10번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/saturday/buck8.pdf" target="_blank">북구8번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/saturday/seong2.pdf" target="_blank">성서2번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/saturday/seong3.pdf" target="_blank">성서3번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/saturday/su2.pdf" target="_blank">수성2번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/saturday/7-3.pdf" target="_blank">칠곡3번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/saturday/7-5.pdf" target="_blank">칠곡5번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/saturday/8-1.pdf" target="_blank">팔공1번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/saturday/8-2(12~2).pdf" target="_blank">팔공2번 운행시간표(12월~2월)</a><br><br>
+      <a href="pdf/jiseon/saturday/8-2(3~11).pdf" target="_blank">팔공2번 운행시간표(3월~11월)</a><br><br>
+      <a href="pdf/jiseon/saturday/8-3.pdf" target="_blank">팔공3번 운행시간표</a><br><br>
+      <hr>
+      <h3>휴일</h3>
+      <a href="pdf/jiseon/holiday/ga2.pdf" target="_blank">가창2번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/holiday/dar1.pdf" target="_blank">달성1번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/holiday/dar2.pdf" target="_blank">달성1번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/holiday/dar3.pdf" target="_blank">달성1번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/holiday/dar5.pdf" target="_blank">달성1번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/holiday/dar6.pdf" target="_blank">달성1번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/holiday/dar7.pdf" target="_blank">달성7번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/holiday/dong5.pdf" target="_blank">동구5번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/holiday/dong6.pdf" target="_blank">동구6번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/holiday/dong7.pdf" target="_blank">동구7번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/holiday/seo2.pdf" target="_blank">서구2번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/holiday/seong2.pdf" target="_blank">성서2번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/holiday/seong3.pdf" target="_blank">성서3번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/holiday/su2.pdf" target="_blank">수성2번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/holiday/buck4.pdf" target="_blank">북구4번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/holiday/buck8.pdf" target="_blank">북구8번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/holiday/7-3.pdf" target="_blank">칠곡3번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/holiday/7-5.pdf" target="_blank">칠곡5번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/holiday/8-1.pdf" target="_blank">팔공1번 운행시간표</a><br><br>
+      <a href="pdf/jiseon/holiday/8-2(12~2).pdf" target="_blank">팔공2번 운행시간표(12월~2월)</a><br><br>
+      <a href="pdf/jiseon/holiday/8-2(3~11).pdf" target="_blank">팔공2번 운행시간표(3월~11월)</a><br><br>
+      <a href="pdf/jiseon/holiday/8-3.pdf" target="_blank">팔공3번 운행시간표</a><br><br>
+    </div>
 
   </div>
 
-  <div id="geuphaeng" class="content" style="display:none;">
-    <h2>급행</h2>
-
-
-  <h3>평일</h3>
-
-  <a href="pdf/geuphaeng/weekly/1.pdf" target="_blank">급행1번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/geuphaeng/weekly/2.pdf" target="_blank">급행2번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/geuphaeng/weekly/3.pdf" target="_blank">급행3번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/geuphaeng/weekly/5.pdf" target="_blank">급행5번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/geuphaeng/weekly/7.pdf" target="_blank">급행7번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/geuphaeng/weekly/8.pdf" target="_blank">급행8번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/geuphaeng/weekly/8-1.pdf" target="_blank">급행8-1번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/geuphaeng/weekly/9.pdf" target="_blank">급행9번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/geuphaeng/weekly/9-1.pdf" target="_blank">급행9-1번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/geuphaeng/weekly/9-2.pdf" target="_blank">급행9-2번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/geuphaeng/weekly/9-3.pdf" target="_blank">급행9-3번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/geuphaeng/weekly/10.pdf" target="_blank">급행10번 운행시간표</a>
-
-  <hr>
-
-  <h3>토요일</h3>
-
-  <a href="pdf/geuphaeng/saturday/1.pdf" target="_blank">급행1번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/geuphaeng/saturday/2.pdf" target="_blank">급행2번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/geuphaeng/saturday/3.pdf" target="_blank">급행3번 운행시간표</a>
-  <br><br>
-
-    <a href="pdf/geuphaeng/saturday/5.pdf" target="_blank">급행5번 운행시간표</a>
-  <br><br>
-
-    <a href="pdf/geuphaeng/saturday/8.pdf" target="_blank">급행8번 운행시간표</a>
-  <br><br>
-
-    <a href="pdf/geuphaeng/saturday/8-1.pdf" target="_blank">급행8-1번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/geuphaeng/saturday/9.pdf" target="_blank">급행9번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/geuphaeng/saturday/9-1.pdf" target="_blank">급행9-1번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/geuphaeng/saturday/9-2.pdf" target="_blank">급행9-2번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/geuphaeng/saturday/9-3.pdf" target="_blank">급행9-3번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/geuphaeng/saturday/10.pdf" target="_blank">급행10번 운행시간표</a>
-
-  <hr>
-
-  <h3>휴일</h3>
-
-  <a href="pdf/geuphaeng/holiday/1.pdf" target="_blank">급행1번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/geuphaeng/holiday/2.pdf" target="_blank">급행2번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/geuphaeng/holiday/7.pdf" target="_blank">급행7번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/geuphaeng/holiday/8.pdf" target="_blank">급행8번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/geuphaeng/holiday/8-1.pdf" target="_blank">급행8-1번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/geuphaeng/holiday/+.pdf" target="_blank">급행9번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/geuphaeng/holiday/9-1.pdf" target="_blank">급행9-1번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/geuphaeng/holiday/9-2.pdf" target="_blank">급행9-2번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/geuphaeng/holiday/9-3.pdf" target="_blank">급행9-3번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/geuphaeng/holiday/10.pdf" target="_blank">급행10번 운행시간표</a>
-
-</div>
-
-  <script src="script.js"></script>
-<div id="ganseon" class="content" style="display:none;">
-
-  <h2>간선</h2>
-
-  <h3>평일</h3>
-
-  <a href="pdf/ganseon/weekly/156.pdf" target="_blank">
-    156번 운행시간표
-  </a>
-
-  <br><br>
-
-  <a href="pdf/ganseon/weekly/232.pdf" target="_blank">
-    232번 운행시간표
-  </a>
-
-  <br><br>
-
-  <a href="pdf/ganseon/weekly/232-1.pdf" target="_blank">
-    232-1번 운행시간표
-  </a>
-
-  <br><br>
-
-  <a href="pdf/ganseon/weekly/401.pdf" target="_blank">
-    401번 운행시간표
-  </a>
-
-  <br><br>
-
-  <a href="pdf/ganseon/weekly/402.pdf" target="_blank">
-    402번 운행시간표
-  </a>
-
-  <br><br>
-
-  <a href="pdf/ganseon/weekly/413.pdf" target="_blank">
-    413번 운행시간표
-  </a>
-
-  <br><br>
-
-  <a href="pdf/ganseon/weekly/425.pdf" target="_blank">
-    425번 운행시간표
-  </a>
-
-  <br><br>
-
-  <a href="pdf/ganseon/weekly/520.pdf" target="_blank">
-    520번 운행시간표
-  </a>
-
-  <br><br>
-
-  <a href="pdf/ganseon/weekly/523.pdf" target="_blank">
-    523번 운행시간표
-  </a>
-
-  <br><br>
-
-  <a href="pdf/ganseon/weekly/708.pdf" target="_blank">
-    708번 운행시간표
-  </a>
-
-  <br><br>
-
-  <a href="pdf/ganseon/weekly/725.pdf" target="_blank">
-    725번 운행시간표
-  </a>
-
-  <br><br>
-
-  <a href="pdf/ganseon/weekly/730.pdf" target="_blank">
-    730번 운행시간표
-  </a>
-
-  <br><br>
-
-  <a href="pdf/ganseon/weekly/848.pdf" target="_blank">
-    848번 운행시간표
-  </a>
-
-  <br><br>
-
-  <a href="pdf/ganseon/weekly/7250.pdf" target="_blank">
-    7250번 운행시간표
-  </a>
-
-  <br><br>
-
-  <a href="pdf/ganseon/weekly/8140.pdf" target="_blank">
-    8140번 운행시간표
-  </a>
-<hr>
-<h3>토요일</h3>
-
-<a href="pdf/ganseon/saturday/326.pdf" target="_blank">
-  326번 운행시간표
-</a>
-
-<br><br>
-
-<a href="pdf/ganseon/saturday/651.pdf" target="_blank">
-  651번 운행시간표
-</a>
-
-<br><br>
-
-<a href="pdf/ganseon/saturday/708.pdf" target="_blank">
-  708번 운행시간표
-</a>
-
-<br><br>
-
-<a href="pdf/ganseon/saturday/730.pdf" target="_blank">
-  730번 운행시간표
-</a>
-
-<br><br>
-
-<a href="pdf/ganseon/saturday/937.pdf" target="_blank">
-  937번 운행시간표
-</a>
-<hr>
-<h3>휴일</h3>
-
-  <a href="pdf/ganseon/holiday/401.pdf" target="_blank">
-    401번 운행시간표
-  </a>
-
-  <br><br>
-
-  <a href="pdf/ganseon/holiday/413.pdf" target="_blank">413번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/ganseon/holiday/520.pdf" target="_blank">520번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/ganseon/holiday/523.pdf" target="_blank">523번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/ganseon/holiday/708.pdf" target="_blank">708번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/ganseon/holiday/725.pdf" target="_blank">725번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/ganseon/holiday/730.pdf" target="_blank">730번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/ganseon/holiday/836.pdf" target="_blank">836번 운행시간표</a>
-
-</div>
-
-
-  <div id="sunhwan" class="content" style="display:none;">
-    <h2>순환</h2>
-
-
-  <h3>평일</h3>
-
-  <a href="pdf/sunhwan/weekly/2.pdf" target="_blank">순환2번 운행시간표</a>
-  <br><br>
-
-    <a href="pdf/sunhwan/weekly/2-1.pdf" target="_blank">순환2-1번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/sunhwan/weekly/3.pdf" target="_blank">순환3번 운행시간표</a>
-  <br><br>
-<hr>
-
-  <h3>토요일</h3>
-
-  <a href="pdf/sunhwan/saturday/2.pdf" target="_blank">순환2번 운행시간표</a>
-  <br><br>
-
-    <a href="pdf/sunhwan/saturday/2-1.pdf" target="_blank">순환2-1번 운행시간표</a>
-  <br><br>
-
-  <a href="pdf/sunhwan/saturday/3-1.pdf" target="_blank">순환3-1번 운행시간표</a>
-  <br><br>
-<hr>
-</div>
-
-<div id="jiseon" class="content" style="display:none;">
-
-  <h2>지선</h2>
-
-  <h3>평일</h3>
-
-    <a href="pdf/jiseon/weekly/ga2.pdf" target="_blank">가창2번 운행시간표</a>
-  <br><br>
-
-      <a href="pdf/jiseon/weekly/dar1.pdf" target="_blank">달성1번 운행시간표</a>
-  <br><br>
-
-        <a href="pdf/jiseon/weekly/dar2.pdf" target="_blank">달성2번 운행시간표</a>
-  <br><br>
-
-        <a href="pdf/jiseon/weekly/dar3.pdf" target="_blank">달성3번 운행시간표</a>
-  <br><br>
-
-        <a href="pdf/jiseon/weekly/dar5.pdf" target="_blank">달성5번 운행시간표</a>
-  <br><br>
-
-        <a href="pdf/jiseon/weekly/dar6.pdf" target="_blank">달성6번 운행시간표</a>
-  <br><br>
-
-        <a href="pdf/jiseon/weekly/dar7.pdf" target="_blank">달성7번 운행시간표</a>
-  <br><br>
-
-        <a href="pdf/jiseon/weekly/dong5.pdf" target="_blank">동구5번 운행시간표</a>
-  <br><br>
-
-          <a href="pdf/jiseon/weekly/dong6.pdf" target="_blank">동구6번 운행시간표</a>
-  <br><br>
-
-          <a href="pdf/jiseon/weekly/dong7.pdf" target="_blank">동구7번 운행시간표</a>
-  <br><br>
-
-          <a href="pdf/jiseon/weekly/dong8.pdf" target="_blank">동구8번 운행시간표</a>
-  <br><br>
-
-          <a href="pdf/jiseon/weekly/buck1.pdf" target="_blank">북구1번 운행시간표</a>
-  <br><br>
-
-            <a href="pdf/jiseon/weekly/buck2.pdf" target="_blank">북구2번 운행시간표</a>
-  <br><br>
-
-            <a href="pdf/jiseon/weekly/buck6.pdf" target="_blank">북구6번 운행시간표</a>
-  <br><br>
-
-            <a href="pdf/jiseon/weekly/buck8.pdf" target="_blank">북구8번 운행시간표</a>
-  <br><br>
-
-            <a href="pdf/jiseon/weekly/seo2.pdf" target="_blank">서구번 운행시간표</a>
-  <br><br>
-
-          <a href="pdf/jiseon/weekly/seong2.pdf" target="_blank">성서2번 운행시간표</a>
-  <br><br>
-
-            <a href="pdf/jiseon/weekly/seong3.pdf" target="_blank">성서3번 운행시간표</a>
-  <br><br>
-
-          <a href="pdf/jiseon/weekly/su2.pdf" target="_blank">수성2번 운행시간표</a>
-  <br><br>
-
-            <a href="pdf/jiseon/weekly/7-3.pdf" target="_blank">칠곡3번 운행시간표</a>
-  <br><br>
-
-              <a href="pdf/jiseon/weekly/7-5.pdf" target="_blank">칠곡5번 운행시간표</a>
-  <br><br>
-
-              <a href="pdf/jiseon/weekly/8-1.pdf" target="_blank">팔공1번 운행시간표</a>
-  <br><br>
-
-  <hr>
-
-   <h3>토요일</h3>
-
-                <a href="pdf/jiseon/saturday/ga2.pdf" target="_blank">가창2번 운행시간표</a>
-  <br><br>
-
-              <a href="pdf/jiseon/saturday/darseo3.pdf" target="_blank">달서3번 운행시간표</a>
-  <br><br>
-
-                  <a href="pdf/jiseon/saturday/dar1.pdf" target="_blank">달성1번 운행시간표</a>
-  <br><br>
-
-          <a href="pdf/jiseon/saturday/dar2.pdf" target="_blank">달성2번 운행시간표</a>
-  <br><br>
-
-        <a href="pdf/jiseon/saturday/dar3.pdf" target="_blank">달성3번 운행시간표</a>
-  <br><br>
-
-          <a href="pdf/jiseon/saturday/dar5.pdf" target="_blank">달성5번 운행시간표</a>
-  <br><br>
-
-          <a href="pdf/jiseon/saturday/dar6.pdf" target="_blank">달성6번 운행시간표</a>
-  <br><br>
-
-          <a href="pdf/jiseon/saturday/dar7.pdf" target="_blank">달성7번 운행시간표</a>
-  <br><br>
-
-            <a href="pdf/jiseon/saturday/dong4-1.pdf" target="_blank">동구4-1번 운행시간표</a>
-  <br><br>
-
-              <a href="pdf/jiseon/saturday/dong5.pdf" target="_blank">동구5번 운행시간표</a>
-  <br><br>
-
-              <a href="pdf/jiseon/saturday/dong6.pdf" target="_blank">동구6번 운행시간표</a>
-  <br><br>
-
-              <a href="pdf/jiseon/saturday/dong7.pdf" target="_blank">동구7번 운행시간표</a>
-  <br><br>
-
-              <a href="pdf/jiseon/saturday/dong8.pdf" target="_blank">동구8번 운행시간표</a>
-  <br><br>
-
-              <a href="pdf/jiseon/saturday/dong10.pdf" target="_blank">동구10번 운행시간표</a>
-  <br><br>
-
-              <a href="pdf/jiseon/saturday/buck8.pdf" target="_blank">북구8번 운행시간표</a>
-  <br><br>
-
-              <a href="pdf/jiseon/saturday/seong2.pdf" target="_blank">성서2번 운행시간표</a>
-  <br><br>
-
-                <a href="pdf/jiseon/saturday/seong3.pdf" target="_blank">성서3번 운행시간표</a>
-  <br><br>
-
-                <a href="pdf/jiseon/saturday/su2.pdf" target="_blank">수성2번 운행시간표</a>
-  <br><br>
-
-          <a href="pdf/jiseon/saturday/7-3.pdf" target="_blank">칠곡3번 운행시간표</a>
-  <br><br>
-
-            <a href="pdf/jiseon/saturday/7-5.pdf" target="_blank">칠곡5번 운행시간표</a>
-  <br><br>
-
-            <a href="pdf/jiseon/saturday/8-1.pdf" target="_blank">팔공1번 운행시간표</a>
-  <br><br>
-
-              <a href="pdf/jiseon/saturday/8-2(12~2).pdf" target="_blank">팔공2번 운행시간표(12월~2월)</a>
-  <br><br>
-
-              <a href="pdf/jiseon/saturday/8-2(3~11).pdf" target="_blank">팔공2번 운행시간표(3월~11월)</a>
-  <br><br>
-
-              <a href="pdf/jiseon/saturday/8-3.pdf" target="_blank">팔공3번 운행시간표</a>
-  <br><br>
-
-  <hr>
-
-    <h3>휴일</h3>
-
-                  <a href="pdf/jiseon/holiday/ga2.pdf" target="_blank">가창2번 운행시간표</a>
-  <br><br>
-
-                    <a href="pdf/jiseon/holiday/dar1.pdf" target="_blank">달성1번 운행시간표</a>
-  <br><br>
-
-                      <a href="pdf/jiseon/holiday/dar2.pdf" target="_blank">달성1번 운행시간표</a>
-  <br><br>
-
-                      <a href="pdf/jiseon/holiday/dar3.pdf" target="_blank">달성1번 운행시간표</a>
-  <br><br>
-
-                      <a href="pdf/jiseon/holiday/dar5.pdf" target="_blank">달성1번 운행시간표</a>
-  <br><br>
-
-                      <a href="pdf/jiseon/holiday/dar6.pdf" target="_blank">달성1번 운행시간표</a>
-  <br><br>
-
-                      <a href="pdf/jiseon/holiday/dar7.pdf" target="_blank">달성7번 운행시간표</a>
-  <br><br>
-
-                      <a href="pdf/jiseon/holiday/dong5.pdf" target="_blank">동구5번 운행시간표</a>
-  <br><br>
-
-                        <a href="pdf/jiseon/holiday/dong6.pdf" target="_blank">동구6번 운행시간표</a>
-  <br><br>
-
-                        <a href="pdf/jiseon/holiday/dong7.pdf" target="_blank">동구7번 운행시간표</a>
-  <br><br>
-
-                        <a href="pdf/jiseon/holiday/seo2.pdf" target="_blank">서구2번 운행시간표</a>
-  <br><br>
-
-                        <a href="pdf/jiseon/holiday/seong2.pdf" target="_blank">성서2번 운행시간표</a>
-  <br><br>
-
-                        <a href="pdf/jiseon/holiday/seong3.pdf" target="_blank">성서3번 운행시간표</a>
-  <br><br>
-
-                        <a href="pdf/jiseon/holiday/su2.pdf" target="_blank">수성2번 운행시간표</a>
-  <br><br>
-
-                        <a href="pdf/jiseon/holiday/buck4.pdf" target="_blank">북구4번 운행시간표</a>
-  <br><br>
-
-                          <a href="pdf/jiseon/holiday/buck8.pdf" target="_blank">북구8번 운행시간표</a>
-  <br><br>
-
-                          <a href="pdf/jiseon/holiday/7-3.pdf" target="_blank">칠곡3번 운행시간표</a>
-  <br><br>
-
-                          <a href="pdf/jiseon/holiday/7-5.pdf" target="_blank">칠곡5번 운행시간표</a>
-  <br><br>
-
-                          <a href="pdf/jiseon/holiday/8-1.pdf" target="_blank">팔공1번 운행시간표</a>
-  <br><br>
-
-                            <a href="pdf/jiseon/holiday/8-2(12~2).pdf" target="_blank">팔공2번 운행시간표(12월~2월)</a>
-  <br><br>
-
-                            <a href="pdf/jiseon/holiday/8-2(3~11).pdf" target="_blank">팔공2번 운행시간표(3월~11월)</a>
-  <br><br>
-
-                            <a href="pdf/jiseon/holiday/8-3.pdf" target="_blank">팔공3번 운행시간표</a>
-  <br><br>
-
-</div>
-
-<script src="script.js"></script>
-
-</body>
-</html>
-
-</div>
-
-<script src="script.js"></script>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>버스 시간표</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-    <div id="login-section" style="text-align: center; margin-top: 100px;">
-        <h2>버스 시간표 로그인</h2>
-        <input type="password" id="password-input" placeholder="비밀번호를 입력하세요" style="padding: 10px; width: 200px;">
-        <br><br>
-        <button onclick="checkLogin('user')" style="padding: 10px 20px; background-color: blue; color: white; border: none; cursor: pointer;">일반 로그인</button>
-        <button onclick="checkLogin('admin')" style="padding: 10px 20px; background-color: red; color: white; border: none; cursor: pointer; margin-left: 10px;">관리자 로그인</button>
-    </div>
-
-    <div id="main-content" style="display: none;">
-        <h1>버스 시간표 (접속 완료)</h1>
+  <script>
+    let isAdminMode = false;
+
+    function handleRegister() {
+        alert("GitHub Pages는 데이터베이스 서버가 없어 신규 가입 정보를 저장할 수 없습니다.\n지정된 테스트용 아이디와 비밀번호를 사용해주세요!");
+    }
+
+    function toggleMode() {
+        isAdminMode = !isAdminMode;
         
-        <div id="admin-banner" style="display: none; background-color: #ffcccc; padding: 10px; margin-bottom: 20px;">
-            <strong>⚠️ 관리자 모드로 접속 중입니다. (시간표 수정 권한)</strong>
-        </div>
-        
-        <div class="tabs">
-            </div>
-    </div>
+        const title = document.getElementById('login-title');
+        const toggleLink = document.getElementById('toggle-link');
+        const submitBtn = document.getElementById('submit-btn');
 
-    <script>
-        function checkLogin(role) {
-            const password = document.getElementById('password-input').value;
+        if (isAdminMode) {
+            title.innerText = "관리자 로그인";
+            title.style.color = "#d9534f";
+            submitBtn.style.backgroundColor = "#d9534f";
+            toggleLink.innerText = "일반 로그인";
+        } else {
+            title.innerText = "일반 로그인";
+            title.style.color = "#333";
+            submitBtn.style.backgroundColor = "#007bff";
+            toggleLink.innerText = "관리자 로그인";
+        }
+    }
 
-            if (role === 'user') {
-                // 일반 로그인 비밀번호를 '1234'로 지정할 때
-                if (password === '1234') {
-                    document.getElementById('login-section').style.display = 'none'; // 로그인창 숨기기
-                    document.getElementById('main-content').style.display = 'block'; // 본문 띄우기
-                } else {
-                    alert('일반 비밀번호가 틀렸습니다!');
-                }
-            } 
-            
-            else if (role === 'admin') {
-                // 관리자 로그인 비밀번호를 'admin77'로 지정할 때
-                if (password === 'admin77') {
-                    document.getElementById('login-section').style.display = 'none';
-                    document.getElementById('main-content').style.display = 'block';
-                    document.getElementById('admin-banner').style.display = 'block'; // 관리자 전용 배너 띄우기
-                } else {
-                    alert('관리자 비밀번호가 틀렸습니다!');
-                }
+    function handleLogin() {
+        const idInput = document.getElementById('username').value;
+        const pwInput = document.getElementById('password').value;
+
+        // 1. 관리자 로그인 처리 (요청하신 정보)
+        if (isAdminMode) {
+            if (idInput === 'xv1mzn' && pwInput === '1234567') {
+                alert('관리자 로그인 성공!');
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                document.getElementById('admin-banner').style.display = 'block'; 
+            } else {
+                alert('관리자 ID 또는 PW가 일치하지 않습니다.');
+            }
+        } 
+        // 2. 일반 로그인 처리 (요청하신 정보)
+        else {
+            if (idInput === '12345' && pwInput === '123456') {
+                alert('로그인 성공! 버스 시간표를 조회합니다.');
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+            } else {
+                alert('ID 또는 PW가 일치하지 않습니다.');
             }
         }
-    </script>
+    }
+  </script>
+
+  <script src="script.js"></script>
+
 </body>
 </html>
